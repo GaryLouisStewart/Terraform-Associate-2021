@@ -20,3 +20,26 @@ resource "aws_iam_instance_profile" "nginx_profile" {
   name = "nginx-profile"
   role = aws_iam_role.allow_nginx_s3.name
 }
+
+
+resource "aws_iam_role_policy" "allow_s3_all" {
+  name = "allow_s3_all"
+  role = aws_iam_role.allow_nginx_s3.id
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:*"
+       ],
+      "Effect": "Allow",
+      "Resource": [
+                "arn:aws:s3:::${local.s3_bucket_name}",
+                "arn:aws:s3:::${local.s3_bucket_name}/*"
+            ]
+    }
+  ]
+}
+EOF
+}
