@@ -68,7 +68,7 @@ in
      usage
      ;;
      *)
-     echo "Command unknown, for more information, ./start_consul.sh -h"
+     echo "Command unknown, for more information, ./get_secret_id.sh -h"
      exit
      ;;
 esac
