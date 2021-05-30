@@ -9,7 +9,6 @@ resource "consul_keys" "networking" {
     path = "networking/configuration/"
     value = ""
   }
-
   key {
     path = "networking/state/"
     value = ""
@@ -59,7 +58,7 @@ resource "consul_acl_policy" "applications" {
 
 resource "consul_acl_token" "gary" {
   description = "token for gary"
-  policies = [consul_acl_policy.applications.name]
+  policies = [consul_acl_policy.networking.name]
 }
 
 resource "consul_acl_token" "developer" {
