@@ -3,9 +3,14 @@
 
 function start_consul_agent() {
     echo "Starting consul agent on localhost 127.0.0.1....."
-    consul agent -bootstrap -config-file="config/consul-config.hcl" -bind "127.0.0.1" > /dev/null 2>&1 & 
-    CONSUL_PID=$!
-    echo "consul-agent started.... and consul PID: $CONSUL_PID"
+    if [[ -f "config/consul-config.hcl" ]]; then
+      consul agent -bootstrap -config-file="config/consul-config.hcl" -bind "127.0.0.1" > /dev/null 2>&1 &
+      CONSUL_PID=$!
+      echo "consul-agent started.... and consul PID: $CONSUL_PID"
+    else
+      echo "Error: cannot find config folder and consul-config.hcl file. Please make sure these are present."
+      exit 1
+    fi
     
     echo "Writing consul PID to pid file consul-pid.txt"
     echo $CONSUL_PID > ./consul-pid.txt
@@ -19,7 +24,7 @@ function start_consul_agent() {
     # shellcheck disable=SC2002
     secret_id="$(cat bootstrap-token.json | jq -r .SecretID)"
     
-    echo $secret_id > ./secret-id.txt
+    echo "$secret_id" > ./secret-id.txt
 
     echo "echo checking consul systemd service is running..."
     systemctl status consul.service

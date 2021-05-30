@@ -38,3 +38,6 @@ override.tf.json
 
 *-secret_id.txt
 secret_token.txt
+bootstrap-token.json
+consul-pid.txt
+secret-id.txt
