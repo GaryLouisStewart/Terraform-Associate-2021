@@ -41,3 +41,4 @@ secret_token.txt
 bootstrap-token.json
 consul-pid.txt
 secret-id.txt
+/consul_state_setup/networking_with_consul_state/config.tfplan
